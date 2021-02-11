@@ -1,0 +1,65 @@
+<resources>
+    <string name="cmtp_ok">OK</string>
+    <string name="cmtp_cancel">Cancel</string>
+    <string name="cmtp_default_separator">/</string>
+    <string name="app_name">Charlhie</string>
+    <string name="general_error_message" />
+    <string name="err_password">كلمة المرور على الاقل من ٦ حروف او أرقام</string>
+    <string name="err_email">ادخل البريد الالكتروني بشكل صحيح</string>
+    <string name="err_name">ادخل الاسم المستخدم بشكل صحيح</string>
+    <string name="err_title">الاسم غير صالح</string>
+    <string name="err_desc">الوصف غير صالح</string>
+    <string name="err_password_confirmation">كلمة المرور غير متطابقة</string>
+    <string name="err_phone">رقم الهاتف غير صالح</string>
+    <string name="err_date">نمط التاريخ dd-mm-yyyy</string>
+    <string name="invalid">غير صالح</string>
+    <string name="err_height">min=10, max=275</string>
+    <string name="err_weight">min=1, max=500</string>
+    <string name="err_code_number">الكود يحتوي على ٥ ارقام</string>
+    <string name="err_speed_tracked">ادخل قمية صحيحة</string>
+    <string name="err_empty">الحقل فارغ</string>
+    <string name="pay_with_card">Betaal met kaart</string>
+    <string name="enter_card_number">Geef kaartnummer in</string>
+    <string name="enter_expire_mont">Geef vervaldatum in</string>
+    <string name="enter_expire_year">Geef vervaljaar in</string>
+    <string name="enter_cvc">Geef CVC code</string>
+    <string name="enter_valid_month_year">Geef geldig maand/jaar in</string>
+    <string name="error_card">foute kaartvalidatie</string>
+    <string name="procesing">Processing...</string>
+    <string name="sucess">Success</string>
+    <string name="payment_success_title">Proficiat!</string>
+    <string name="reserve_success">Uw reservatie is genoteerd!</string>
+    <string name="reserve_message">U zult ook een bevestigingsemail ontvangen.  Indien niet ontvangen, kijk even in je reclame inbox.</string>
+    <string name="payment_success">U zult een bevestigingsemail ontvangen. Kijk ook even in je reclame-box.</string>
+    <string name="err_add_data">القيمة غير مدخلة</string>
+    <string name="err_add_price">أدخل سعر صالح</string>
+
+    <string name="dialog_cancell">annuleren</string>
+    <string name="good_morning">Goedemorgen</string>
+    <string name="good_afternoon">Goedenamiddag</string>
+    <string name="good_evening">goedenavond</string>
+    <string name="good_night">Goedenacht</string>
+    <string name="shipping_address_same_as_billing_address">Verzendadres zelfde als factuuradres Indien niet:</string>
+    <string name="delivery_address">Leveringsadres</string>
+    <string name="billing_information">Faktuuradres</string>
+    <string name="if_not">Indien niet :</string>
+    <string name="click_here">Klik hier</string>
+    <string name="btn_reserve">Reserveer</string>
+    <string name="click_here_for_delivery_address">KLIK HIER VOOR LEVERINGSADRES</string>
+    <string name="continue_to_payment">Ga door naar betaling</string>
+    <string name="click_for_more_info">Voor meer informatie over verzend- en</string>
+    <string name="items_quantity">Aantal:</string>
+    <string name="free_shipping">Gratis verzending</string>
+
+    <string name="total_price">Totale prijs:</string>
+    <string name="vat_included">BTW inbegrepen</string>
+    <string name="emailAddress">pvh@charlhie.be</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sure_remove_image">Wil je dit produkt verwijderen?</string>
+    <string name="phoneNumber">+32 468128272</string>
+    <string name="search_menu_title">Search</string>
+    <string name="website">www.charlhie.be</string>
+    <string name="action_settings">setting</string>
+</resources>

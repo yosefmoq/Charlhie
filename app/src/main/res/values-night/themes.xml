@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Charlhie" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="SelectionDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/bottom_navigation_color</item>
+        <item name="colorPrimary">@color/toolbar_color</item>
+        <item name="colorPrimaryDark">@color/toolbar_color</item>
+    </style>
+    <style name="SelectionDialog.PreL" parent="@style/SelectionDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="DialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/bottom_navigation_color</item>
+        <item name="colorPrimary">@color/toolbar_color</item>
+        <item name="colorPrimaryDark">@color/toolbar_color</item>
+    </style>
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:tag="layout/activity_payment_0">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <ImageView
+                        android:id="@+id/imvBackFromPayment"
+                        android:layout_width="44dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/black_arrow" />
+
+                    <TextView
+                        android:id="@+id/tvTiltle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Kies betalingsmodule"
+                        android:textColorLink="#000"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPayStripe"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="80dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        app:srcCompat="@drawable/mastercard" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPayMaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="40dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:srcCompat="@drawable/visa" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPayBancontact"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="40dp">
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:srcCompat="@drawable/unnamed" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:text="Secure Payments"
+                    android:textColor="#003366"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/secure_pay" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDebug"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:minHeight="500dp"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/paymentProgress"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+</layout>
