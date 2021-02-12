@@ -86,7 +86,7 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
             this.stripeObject.createSource(SourceParams.createBancontactParams(Math.round(/*getViewModel().totalAmountToPay()*/1 * 100.0d), "Charlhie", "my://charlhie/?status=1", "ORDER AT11"), new SourceCallback() {
                 @Override
                 public void onError(Exception error) {
-                    PaymentActivity.this.findViewById(R.id.paymentProgress).setVisibility(View.GONE);
+                    findViewById(R.id.paymentProgress).setVisibility(View.GONE);
                     Log.e("NIKO", error.getLocalizedMessage());
                 }
 
