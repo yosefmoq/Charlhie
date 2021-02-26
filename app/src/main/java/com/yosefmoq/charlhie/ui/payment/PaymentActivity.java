@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,6 +26,7 @@ import com.yosefmoq.charlhie.models.BanContactRequest;
 import com.yosefmoq.charlhie.models.Category;
 import com.yosefmoq.charlhie.models.RigesterRequest;
 import com.yosefmoq.charlhie.repository.local.LocalSave;
+import com.yosefmoq.charlhie.utils.BR;
 import com.yosefmoq.charlhie.utils.EmailFormatter;
 
 import java.text.SimpleDateFormat;
@@ -47,18 +49,29 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
 
     @Override // com.yosefmoq.charlhie.Base.BaseActivity
     public int getBindingVariable() {
-        return 1;
+        return BR._all;
     }
 
     @Override // com.yosefmoq.charlhie.Base.BaseActivity
     public void initItems() {
         this.rigesterRequest = LocalSave.getInstance(getApplicationContext()).getCurrentUser();
         this.productResponses = getViewModel().getProduct();
+//        sendOrderEmail("yosefmoqq@gmail.com");
+//        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
+
         getViewModel().setNavigator(this);
     }
 
     @Override
     public void initClicks() {
+        getViewModel().baseResponseMutableLiveData.observe(this,s -> {
+            if(s.equalsIgnoreCase("done")){
+                getViewModel().deleteCart();
+                finish();
+            }else {
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });
         ((ActivityPaymentBinding) getViewDataBinding()).rlPayBancontact.setOnClickListener(new View.OnClickListener() {
 
             public final void onClick(View view) {
@@ -114,8 +127,8 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
 
     private void sendOrderEmail(String email) {
         String text = new EmailFormatter(this, getViewModel().totalAmountToPay(), this.rigesterRequest, this.productResponses, getViewModel().myDatabase.getAnnal()).formatText(false);
-        sendEmailToServer(email, text);
-        sendEmailToServer("kurtwarson@hotmail.com", text);
+//        sendEmailToServer(email, text);
+//        sendEmailToServer("kurtwarson@hotmail.com", text);
         sendEmailToServer("yosefmoqq@gmail.com",text);
     }
 
@@ -145,7 +158,7 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     @Override
     public void success() {
         sendOrderEmail(this.rigesterRequest.getEmail());
-        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
+//        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
     }
 
     @Override
@@ -156,7 +169,7 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     @Override
     public void SuccessBan() {
         sendOrderEmail(this.rigesterRequest.getEmail());
-        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
+//        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
     }
 
     @Override

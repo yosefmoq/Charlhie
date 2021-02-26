@@ -41,7 +41,7 @@ public class SendOrderTask extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         StringBuilder result = new StringBuilder();
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) new URL("https://www.cocoonplace.com/DebiehalFiles/userOrderDebiehal.php").openConnection();
+            HttpURLConnection urlConnection = (HttpURLConnection) new URL("www.cocoonplace.com/be/userOrderCharlhie.php").openConnection();
             urlConnection.setReadTimeout(20000);
             urlConnection.setConnectTimeout(20000);
             urlConnection.setRequestMethod("POST");

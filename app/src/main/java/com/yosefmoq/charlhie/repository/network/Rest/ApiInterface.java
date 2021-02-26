@@ -29,6 +29,6 @@ public interface ApiInterface {
     Observable<RigsterResponse> register(@Field("email") String str, @Field("firstname") String str2, @Field("password") String str3, @Field("lastname") String str4, @Field("streetname") String str5, @Field("boxnumber") String str6, @Field("housenumber") String str7, @Field("postcode") String str8, @Field("city") String str9, @Field("country") String str10, @Field("vat") String str11, @Field("company") String str12);
 
     @FormUrlEncoded
-    @POST("be/fileGazetOrder.php")
+    @POST("be/fileCharlhieOrder.php")
     Observable<String> sendEmail(@Field("email") String str, @Field("data") String str2);
 }

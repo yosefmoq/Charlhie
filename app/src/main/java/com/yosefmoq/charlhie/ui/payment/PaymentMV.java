@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.yosefmoq.charlhie.Base.BaseViewModel;
 import com.yosefmoq.charlhie.CardNavigation;
 import com.yosefmoq.charlhie.models.BanContactRequest;
@@ -21,7 +23,7 @@ public class PaymentMV extends BaseViewModel<CardNavigation> {
     public PaymentMV(Application application) {
         super(application);
     }
-
+    public MutableLiveData<String> baseResponseMutableLiveData = new MutableLiveData<>();
     public void banRequest(BanContactRequest banContactRequest) {
         getCompositeDisposable().add(getDataManager().banContact(banContactRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(banResponse -> {
             if (banResponse.getStatus().equalsIgnoreCase("Your betaling has been received, Thank you!")) {
@@ -41,8 +43,10 @@ public class PaymentMV extends BaseViewModel<CardNavigation> {
 
     public void sendEmail(String email, String data) {
         getCompositeDisposable().add(getDataManager().sendEmail(email, data).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(s -> {
-
+            baseResponseMutableLiveData.postValue("done");
         }, throwable -> {
+            baseResponseMutableLiveData.postValue("error");
+
             Log.v("ttt", throwable.getLocalizedMessage());
             Toast.makeText(getApplication(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             Log.v("ttt", throwable.getLocalizedMessage());

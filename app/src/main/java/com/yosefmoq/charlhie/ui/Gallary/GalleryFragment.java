@@ -53,31 +53,28 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
     public void initListners() {
          getViewDataBinding().btnCheckout.setOnClickListener(v -> {
             RigesterRequest rigesterRequest = LocalSave.getInstance(requireContext()).getCurrentUser();
-            if (rigesterRequest.getEmail() == null || rigesterRequest.getEmail().equalsIgnoreCase("")){
+            if (rigesterRequest==null||rigesterRequest.getEmail() == null || rigesterRequest.getEmail().equalsIgnoreCase("")){
                 startActivity(new Intent(requireActivity(), AuthActivity.class));
                 Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show();
             }else {
                 startActivity(new Intent(requireActivity(), PaymentActivity.class));
                 Toast.makeText(requireContext(), "false", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
-
-
-    @Override // com.yosefmoq.charlhie.Base.BaseFragment, androidx.fragment.app.Fragment
+    @Override
     public void onResume() {
         super.onResume();
         if (new MyDatabase(requireContext()).getProducts().size() > 0) {
-            ((FragmentGalleryBinding) getViewDataBinding()).ivNotFound.setVisibility(View.GONE);
-            ((FragmentGalleryBinding) getViewDataBinding()).llFound.setVisibility(View.VISIBLE);
-            this.cartAdapter.notifyData(new MyDatabase(requireContext()).getProducts());
+            getViewDataBinding().ivNotFound.setVisibility(View.GONE);
+            getViewDataBinding().llFound.setVisibility(View.VISIBLE);
+            cartAdapter.notifyData(new MyDatabase(requireContext()).getProducts());
             getViewDataBinding().tvAantal.setText(new MyDatabase(requireContext()).getAnnal() + "");
             getViewDataBinding().tvTotal.setText(Utils.displayDoubleValue(new MyDatabase(requireContext()).getPrice()) + " €");
             return;
         }
-        ((FragmentGalleryBinding) getViewDataBinding()).ivNotFound.setVisibility(View.VISIBLE);
-        ((FragmentGalleryBinding) getViewDataBinding()).llFound.setVisibility(View.GONE);
+        getViewDataBinding().ivNotFound.setVisibility(View.VISIBLE);
+        getViewDataBinding().llFound.setVisibility(View.GONE);
     }
 
     @Override // com.yosefmoq.charlhie.Base.BaseFragment
@@ -89,15 +86,15 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
     public void onConfirm() {
         this.cartAdapter.notifyData(new MyDatabase(requireContext()).getProducts());
         if (new MyDatabase(requireContext()).getProducts().size() > 0) {
-            ((FragmentGalleryBinding) getViewDataBinding()).ivNotFound.setVisibility(View.GONE);
-            ((FragmentGalleryBinding) getViewDataBinding()).llFound.setVisibility(View.VISIBLE);
-            TextView textView = ((FragmentGalleryBinding) getViewDataBinding()).tvAantal;
+            getViewDataBinding().ivNotFound.setVisibility(View.GONE);
+            getViewDataBinding().llFound.setVisibility(View.VISIBLE);
+            TextView textView = getViewDataBinding().tvAantal;
             textView.setText(new MyDatabase(requireContext()).getAnnal() + "");
-            TextView textView2 = ((FragmentGalleryBinding) getViewDataBinding()).tvTotal;
+            TextView textView2 = getViewDataBinding().tvTotal;
             textView2.setText(new MyDatabase(requireContext()).getPrice() + "");
             return;
         }
-        ((FragmentGalleryBinding) getViewDataBinding()).ivNotFound.setVisibility(View.VISIBLE);
-        ((FragmentGalleryBinding) getViewDataBinding()).llFound.setVisibility(View.GONE);
+        getViewDataBinding().ivNotFound.setVisibility(View.VISIBLE);
+        getViewDataBinding().llFound.setVisibility(View.GONE);
     }
 }

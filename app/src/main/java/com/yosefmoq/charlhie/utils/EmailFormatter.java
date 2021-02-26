@@ -48,7 +48,7 @@ public class EmailFormatter {
         stringBuilder.append(this.rigesterRequest.getLastname());
         stringBuilder.append(" <br><br>");
         if (isReservation) {
-            stringBuilder.append("Bedankt voor je bes bij het Gazetje. Gelieve binnen de 7 dagen langs te komen in de zaak. ");
+            stringBuilder.append("Bedankt voor je bes bij Charlie. Gelieve binnen de 7 dagen langs te komen in de zaak. ");
             stringBuilder.append(" <br><br>");
             stringBuilder.append("We hebben uw reservatie geregistreerd met volgende gegevens :");
             stringBuilder.append(" <br><br>");
