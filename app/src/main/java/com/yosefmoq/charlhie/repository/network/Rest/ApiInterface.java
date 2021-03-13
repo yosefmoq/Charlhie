@@ -1,6 +1,5 @@
 package com.yosefmoq.charlhie.repository.network.Rest;
 
-import com.yosefmoq.charlhie.models.BanResponse;
 import com.yosefmoq.charlhie.models.Category;
 import com.yosefmoq.charlhie.models.RigesterRequest;
 import com.yosefmoq.charlhie.models.RigsterResponse;
@@ -14,8 +13,10 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
-    @POST("myhack/processbancontactJacky.php")
-    Observable<BanResponse> banRes(@Field("source") String str, @Field("amount") int i);
+
+    @FormUrlEncoded
+    @POST("myhack/processbancontactCharlhie.php")
+    Observable<String> banRes(@Field("source") String str, @Field("amount") int i);
 
     @GET("be/Charlhiekaart.php")
     Observable<ArrayList<Category>> getCategories();

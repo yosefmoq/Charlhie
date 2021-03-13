@@ -26,15 +26,15 @@ public class EmailFormatter {
     }
 
     public String formatRigestration() {
-        return (((((((("" + "Beste ") + getName()) + welcomeApp()) + "Met vriendelijke groeten,\n<br><br>") + "Het Gazetje<br>") + address()) + "3770 Riemst<br>") + "Belgium<br>") + "Tel 003212454222<br>";
+        return (((((((("" + "Beste ") + getName()) + welcomeApp()) + "Met vriendelijke groeten,\n<br><br>") + "Charlie<br>") + address()) + "3770 Riemst<br>") + "Belgium<br>") + "Tel 003212454222<br>";
     }
 
     private String address() {
-        return "Maastrichtersteenweg 85<br>";
+        return "proostyeah 20 2<br>3000 leuven<br>";
     }
 
     private String welcomeApp() {
-        return "Bedankt voor uw registratie op de Het Gazetje app. Laat het smaken!\n<br><br>";
+        return "Bedankt voor uw registratie op de Charlie app. Laat het smaken!\n<br><br>";
     }
 
     private String getName() {
@@ -53,7 +53,7 @@ public class EmailFormatter {
             stringBuilder.append("We hebben uw reservatie geregistreerd met volgende gegevens :");
             stringBuilder.append(" <br><br>");
         } else {
-            stringBuilder.append("Bedankt voor uw order bij het Gazetje.");
+            stringBuilder.append("Bedankt voor uw order bij Charlhie.");
             stringBuilder.append(" <br><br>");
             stringBuilder.append("We hebben uw order geregistreerd met volgende gegevens :  ");
             stringBuilder.append(" <br><br>");
@@ -76,16 +76,11 @@ public class EmailFormatter {
         stringBuilder.append(this.rigesterRequest.getPostcode() + " ");
         stringBuilder.append(this.rigesterRequest.getCity() + "<br>");
         stringBuilder.append(this.rigesterRequest.getVat() + "<br><br>");
+        stringBuilder.append(this.address()+"<br><br>");
         stringBuilder.append(" <br> ");
-        stringBuilder.append(" Het Gazetje");
+        stringBuilder.append(" Charlhie");
         stringBuilder.append(" <br> ");
-        stringBuilder.append("Maastrichtersteenweg 85");
-        stringBuilder.append(" <br> ");
-        stringBuilder.append(" 3770 Riemst");
-        stringBuilder.append(" <br> ");
-        stringBuilder.append(" Belgium ");
-        stringBuilder.append(" <br> ");
-        stringBuilder.append(" Tel 003212454222 ");
+        stringBuilder.append(" Tel +32 486678082");
         stringBuilder.append(" <br> ");
         return stringBuilder.toString();
     }
@@ -97,7 +92,7 @@ public class EmailFormatter {
             Iterator<Category> it = arrayList.iterator();
             while (it.hasNext()) {
                 Category product = it.next();
-                String text2 = ((text + "Broodjes/drank : " + product.getCategory() + "<br> Info : " + product.getDescription() + "<br> Prijs : " + new DecimalFormat("##.##").format(product.getNativePrice() * ((double) product.getQuantity())) + " EUR <br>") + "<br>") + "Aantal :  " + product.getQuantity();
+                String text2 = ((text + "Categorie : " + product.getCategory() + "<br> Beschrijving : " + product.getDescription() + "<br> Prijs : " + new DecimalFormat("##.##").format(product.getNativePrice() * ((double) product.getQuantity())) + " EUR <br>") + "<br>") + "Aantal :  " + product.getQuantity();
                 if (0 == this.products.size() - 1) {
                     text = text2 + "<br>";
                 } else {

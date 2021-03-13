@@ -3,7 +3,6 @@ package com.yosefmoq.charlhie.repository;
 import android.content.Context;
 
 import com.yosefmoq.charlhie.models.BanContactRequest;
-import com.yosefmoq.charlhie.models.BanResponse;
 import com.yosefmoq.charlhie.models.Category;
 import com.yosefmoq.charlhie.models.RigesterRequest;
 import com.yosefmoq.charlhie.models.RigsterResponse;
@@ -48,7 +47,7 @@ public class Repository {
         return apiClient.register(rigesterRequest.getEmail(), rigesterRequest.getFirstname(), rigesterRequest.getPassword(), rigesterRequest.getLastname(), rigesterRequest.getStreetname(), rigesterRequest.getBoxnumber(), rigesterRequest.getHousenumber(), rigesterRequest.getPostcode(), rigesterRequest.getCity(), rigesterRequest.getCountry(), rigesterRequest.getVat(), rigesterRequest.getVat());
     }
 
-    public Observable<BanResponse> banContact(BanContactRequest banContactRequest) {
+    public Observable<String> banContact(BanContactRequest banContactRequest) {
         return apiClient.banRes(banContactRequest.getSource(), banContactRequest.getAmount());
     }
 

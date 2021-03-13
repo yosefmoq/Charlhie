@@ -24,15 +24,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private DialogCallBack dialogCallBack;
     private MyDatabase myDatabase;
     private ArrayList<Category> productResponses;
+    boolean fromPayment;
 
     public void onDialogConfirm(DialogCallBack dialogCallBack2) {
         this.dialogCallBack = dialogCallBack2;
     }
 
-    public CartAdapter(Context context2, ArrayList<Category> productResponses2) {
+    public CartAdapter(Context context2, ArrayList<Category> productResponses2,boolean fromPayment) {
         this.context = context2;
         this.myDatabase = new MyDatabase(context2);
         this.productResponses = productResponses2;
+        this.fromPayment = fromPayment;
     }
 
     @Override
@@ -58,7 +60,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                 alertDialog.dismiss();
             });
             ((Button) view.findViewById(R.id.ibConfirm)).setOnClickListener(v1 -> {
-                this.myDatabase.deleteItemById(productResponse.getId());
+                if(fromPayment){
+                    this.myDatabase.deleteItemById(productResponse.getId());
+                }else {
+                    this.myDatabase.deleteFavById(productResponse.getId());
+                }
                 this.dialogCallBack.onConfirm();
                 alertDialog.dismiss();
 

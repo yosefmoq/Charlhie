@@ -1,11 +1,14 @@
 package com.yosefmoq.charlhie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -66,7 +69,7 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
 
     @Override // com.yosefmoq.charlhie.Base.BaseActivity
     public void initClicks() {
-        getViewModel().categoryMutableLiveData.observe(this,categories -> {
+        getViewModel().categoryMutableLiveData.observe(this, categories -> {
             handleCategoryHashMap(categories);
 
         });
@@ -81,6 +84,7 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
 
             @Override
             public final boolean onNavigationItemSelected(MenuItem menuItem) {
+
                 switch (menuItem.getItemId()) {
                     case R.id.nav_account:
                         selectedPosision = 4;
@@ -89,41 +93,47 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
                     case R.id.nav_cart:
                         selectedPosision = 2;
                         ((ActivityDrawerBinding) getViewDataBinding()).include.include.navHostFragment.setCurrentItem(2);
-                        selectedUn();
+/*                        selectedUn();
                         menu.getItem(0).setIcon(R.drawable.home);
                         menu.getItem(1).setIcon(R.drawable.search);
                         menu.getItem(2).setIcon(R.drawable.selected_cart);
                         menu.getItem(3).setIcon(R.drawable.favorite);
-                        menu.getItem(4).setIcon(R.drawable.account);
+                        menu.getItem(4).setIcon(R.drawable.account);*/
                         break;
                     case R.id.nav_fav:
                         selectedPosision = 3;
                         ((ActivityDrawerBinding) getViewDataBinding()).include.include.navHostFragment.setCurrentItem(3);
+/*
                         menu.getItem(0).setIcon(R.drawable.home);
                         menu.getItem(1).setIcon(R.drawable.search);
                         menu.getItem(2).setIcon(R.drawable.unselectedcart);
                         menu.getItem(3).setIcon(R.drawable.selected_heart);
                         menu.getItem(4).setIcon(R.drawable.account);
+*/
                         break;
                     case R.id.nav_home:
                         selectedPosision = 0;
                         ((ActivityDrawerBinding) getViewDataBinding()).include.include.navHostFragment.setCurrentItem(0);
                         selectedUn();
+/*
                         menuItem.setIcon(R.drawable.selected_home);
                         menu.getItem(0).setIcon(R.drawable.selected_home);
                         menu.getItem(1).setIcon(R.drawable.search);
                         menu.getItem(2).setIcon(R.drawable.unselectedcart);
                         menu.getItem(3).setIcon(R.drawable.favorite);
                         menu.getItem(4).setIcon(R.drawable.account);
+*/
                         break;
                     case R.id.nav_search:
                         selectedPosision = 1;
                         ((ActivityDrawerBinding) getViewDataBinding()).include.include.navHostFragment.setCurrentItem(1);
+/*
                         menu.getItem(0).setIcon(R.drawable.home);
                         menu.getItem(1).setIcon(R.drawable.selected_search);
                         menu.getItem(2).setIcon(R.drawable.unselectedcart);
                         menu.getItem(3).setIcon(R.drawable.favorite);
                         menu.getItem(4).setIcon(R.drawable.account);
+*/
                         break;
                 }
                 return true;
@@ -133,6 +143,7 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
 
             @Override // androidx.viewpager.widget.ViewPager.OnPageChangeListener
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override // androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -175,8 +186,8 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
         return ViewModelProviders.of(this).get(HomeViewModel.class);
     }
 
-   
-    @Override 
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.categoryAdapter = new CategoryAdapter(this, this.categoryModels);
@@ -228,13 +239,7 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
     @Override // androidx.fragment.app.FragmentActivity
     public void onResume() {
         super.onResume();
-        int count = new MyDatabase(this).getAnnal();
-        if (count >= 1) {
-            ((ActivityDrawerBinding) getViewDataBinding()).include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setVisible(true);
-            ((ActivityDrawerBinding) getViewDataBinding()).include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setNumber(count);
-            return;
-        }
-        ((ActivityDrawerBinding) getViewDataBinding()).include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setVisible(false);
+        refresh();
     }
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
@@ -259,5 +264,30 @@ public class DrawerActivity extends BaseActivity<ActivityDrawerBinding, HomeView
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data.getStringExtra("done").equalsIgnoreCase("done")) {
+            showSuccess("Je betaling is goed ontvangen.  Dank je!");
+        }
+    }
+    public void refresh(){
+        int count = new MyDatabase(this).getAnnal();
+        int favCount = new MyDatabase(this).getFavorite().size();
+        if ( favCount> 0) {
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_fav).setVisible(true);
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_fav).setNumber(favCount);
+        } else {
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_fav).setVisible(false);
+
+        }
+        if (count >= 1) {
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setVisible(true);
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setNumber(count);
+        } else
+            getViewDataBinding().include.include.bottomNavigationView.getOrCreateBadge(R.id.nav_cart).setVisible(false);
+
     }
 }

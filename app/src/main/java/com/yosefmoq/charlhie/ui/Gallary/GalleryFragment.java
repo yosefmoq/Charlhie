@@ -3,14 +3,15 @@ package com.yosefmoq.charlhie.ui.Gallary;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.yosefmoq.charlhie.Base.BaseFragment;
 import com.yosefmoq.charlhie.CartAdapter;
 import com.yosefmoq.charlhie.DialogCallBack;
+import com.yosefmoq.charlhie.DrawerActivity;
 import com.yosefmoq.charlhie.R;
 import com.yosefmoq.charlhie.databinding.FragmentGalleryBinding;
 import com.yosefmoq.charlhie.models.Category;
@@ -41,8 +42,9 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
 
     @Override // com.yosefmoq.charlhie.Base.BaseFragment
     public void initItems() {
+
         this.categoryArrayList = new ArrayList<>();
-        CartAdapter cartAdapter2 = new CartAdapter(requireContext(), this.categoryArrayList);
+        CartAdapter cartAdapter2 = new CartAdapter(requireContext(), this.categoryArrayList,true);
         this.cartAdapter = cartAdapter2;
         cartAdapter2.onDialogConfirm(this);
         ((FragmentGalleryBinding) getViewDataBinding()).rvItems.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -55,10 +57,8 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
             RigesterRequest rigesterRequest = LocalSave.getInstance(requireContext()).getCurrentUser();
             if (rigesterRequest==null||rigesterRequest.getEmail() == null || rigesterRequest.getEmail().equalsIgnoreCase("")){
                 startActivity(new Intent(requireActivity(), AuthActivity.class));
-                Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show();
             }else {
-                startActivity(new Intent(requireActivity(), PaymentActivity.class));
-                Toast.makeText(requireContext(), "false", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(requireActivity(), PaymentActivity.class),301);
             }
         });
     }
@@ -70,9 +70,23 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
             getViewDataBinding().llFound.setVisibility(View.VISIBLE);
             cartAdapter.notifyData(new MyDatabase(requireContext()).getProducts());
             getViewDataBinding().tvAantal.setText(new MyDatabase(requireContext()).getAnnal() + "");
-            getViewDataBinding().tvTotal.setText(Utils.displayDoubleValue(new MyDatabase(requireContext()).getPrice()) + " €");
+
+            if(new MyDatabase(requireContext()).getPrice()<50){
+                getViewDataBinding().tvExtra.setVisibility(View.VISIBLE);
+                getViewDataBinding().tvUnderExtra.setVisibility(View.VISIBLE);
+                getViewDataBinding().tvUnderExtra.setText(getReminingText(new MyDatabase(requireContext()).getPrice()));
+                getViewDataBinding().tvTotal.setText(Utils.displayDoubleValue(new MyDatabase(requireContext()).getPrice()+10) + " €");
+
+            }else {
+                getViewDataBinding().tvExtra.setVisibility(View.INVISIBLE);
+//                getViewDataBinding().tvUnderExtra.setVisibility(View.GONE);
+                getViewDataBinding().tvUnderExtra.setText("FREE SHIPPING");
+                getViewDataBinding().tvTotal.setText(Utils.displayDoubleValue(new MyDatabase(requireContext()).getPrice()) + " €");
+            }
+
             return;
         }
+        getViewDataBinding().rvItems.setVisibility(View.GONE);
         getViewDataBinding().ivNotFound.setVisibility(View.VISIBLE);
         getViewDataBinding().llFound.setVisibility(View.GONE);
     }
@@ -84,10 +98,21 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
 
     @Override // com.yosefmoq.charlhie.DialogCallBack
     public void onConfirm() {
+        ((DrawerActivity)requireActivity()).refresh();
         this.cartAdapter.notifyData(new MyDatabase(requireContext()).getProducts());
         if (new MyDatabase(requireContext()).getProducts().size() > 0) {
             getViewDataBinding().ivNotFound.setVisibility(View.GONE);
             getViewDataBinding().llFound.setVisibility(View.VISIBLE);
+            if(new MyDatabase(requireContext()).getPrice()<50){
+                getViewDataBinding().tvExtra.setVisibility(View.VISIBLE);
+//                getViewDataBinding().tvUnderExtra.setVisibility(View.VISIBLE);
+                getViewDataBinding().tvUnderExtra.setText(getReminingText(new MyDatabase(requireContext()).getPrice()));
+            }else {
+                getViewDataBinding().tvExtra.setVisibility(View.INVISIBLE);
+//                getViewDataBinding().tvUnderExtra.setVisibility(View.GONE);
+                getViewDataBinding().tvUnderExtra.setText("FREE SHIPPING");
+
+            }
             TextView textView = getViewDataBinding().tvAantal;
             textView.setText(new MyDatabase(requireContext()).getAnnal() + "");
             TextView textView2 = getViewDataBinding().tvTotal;
@@ -96,5 +121,19 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
         }
         getViewDataBinding().ivNotFound.setVisibility(View.VISIBLE);
         getViewDataBinding().llFound.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==301){
+            if(data.getStringExtra("done").equalsIgnoreCase("done")){
+//                ((DrawerActivity)requireActivity()).showSuccess("Your betaling has been received, Thank you!");
+            }
+        }
+    }
+    private String getReminingText(double amount){
+        double newAmount = 50 -(amount);
+        return "Nog "+Utils.displayDoubleValue(newAmount)+" € to gaan";
     }
 }

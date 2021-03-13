@@ -42,6 +42,11 @@ public class DetailsActivity extends BaseActivity<ActivityDetailsBinding, HomeVi
         Picasso.get().load(category.getImage()).placeholder(R.drawable.account).into(((ActivityDetailsBinding) getViewDataBinding()).ivProductImage);
         TextView textView = ((ActivityDetailsBinding) getViewDataBinding()).tvPrice;
         textView.setText(category.getPrice() + "  €");
+        if (new MyDatabase(DetailsActivity.this).isFav(category.getId())) {
+            getViewDataBinding().ivAddToFav.setImageResource(R.drawable.ic_baseline_favorite_selected_24);
+        } else {
+            getViewDataBinding().ivAddToFav.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
         ((ActivityDetailsBinding) getViewDataBinding()).tvCategory.setText(category.getCategory());
         ((ActivityDetailsBinding) getViewDataBinding()).tvSubCategory.setText(category.getSubCategory());
         ((ActivityDetailsBinding) getViewDataBinding()).tvDescription.setText(category.getDescription());
@@ -50,9 +55,21 @@ public class DetailsActivity extends BaseActivity<ActivityDetailsBinding, HomeVi
 
     @Override // com.yosefmoq.charlhie.Base.BaseActivity
     public void initClicks() {
-        ((ActivityDetailsBinding) getViewDataBinding()).ivAddToCart.setOnClickListener((View.OnClickListener) view -> initDialog());
-        ((ActivityDetailsBinding) getViewDataBinding()).ivCancel.setOnClickListener((View.OnClickListener) view -> finish());
-        ((ActivityDetailsBinding) getViewDataBinding()).ivAddToFav.setOnClickListener((View.OnClickListener) view -> Toast.makeText(DetailsActivity.this, "fav", Toast.LENGTH_LONG).show());
+        getViewDataBinding().ivAddToCart.setOnClickListener((View.OnClickListener) view -> initDialog());
+        getViewDataBinding().ivCancel.setOnClickListener((View.OnClickListener) view -> finish());
+        getViewDataBinding().ivAddToFav.setOnClickListener((View.OnClickListener) view -> {
+            if (new MyDatabase(DetailsActivity.this).isFav(category.getId())) {
+                new MyDatabase(DetailsActivity.this).deleteFavById(category.getId());
+                Toast.makeText(this, "Removed From Favorite", Toast.LENGTH_SHORT).show();
+                getViewDataBinding().ivAddToFav.setImageResource(R.drawable.ic_baseline_favorite_24);
+
+            } else {
+                new MyDatabase(DetailsActivity.this).addProduct(category.getSubCategory(), category.getDescription(), category.getCategory(), 0, category.getImage(), 0, category.getPrice(), category.getLongDescription(), category.getId(), true, category.getDescription());
+                Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show();
+                getViewDataBinding().ivAddToFav.setImageResource(R.drawable.ic_baseline_favorite_selected_24);
+
+            }
+        });
     }
 
 
@@ -67,7 +84,7 @@ public class DetailsActivity extends BaseActivity<ActivityDetailsBinding, HomeVi
                 Toast.makeText(DetailsActivity.this, "Geef een aantal op", Toast.LENGTH_SHORT).show();
                 return;
             }
-            new MyDatabase(DetailsActivity.this).addProduct(category.getSubCategory(), category.getDescription(), category.getCategory(), category.getPrice() * ((double) Integer.parseInt(etAantal.getText().toString())), category.getImage(), Integer.parseInt(etAantal.getText().toString()), category.getPrice(), category.getLongDescription(), category.getId());
+            new MyDatabase(DetailsActivity.this).addProduct(category.getSubCategory(), category.getDescription(), category.getCategory(), category.getPrice() * ((double) Integer.parseInt(etAantal.getText().toString())), category.getImage(), Integer.parseInt(etAantal.getText().toString()), category.getPrice(), category.getLongDescription(), category.getId(), false, category.getDescription());
             dialog.dismiss();
             finish();
 

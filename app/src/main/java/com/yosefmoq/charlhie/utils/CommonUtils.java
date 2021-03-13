@@ -197,8 +197,8 @@ public final class CommonUtils {
     public static SweetAlertDialog showSuccessDialog(Context context,String message) {
         SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setConfirmButton("تم",null);
-        pDialog.setTitleText("تم");
+        pDialog.setConfirmButton("DONE",null);
+        pDialog.setTitleText("DONE");
         pDialog.setContentText(message);
         pDialog.setCancelable(false);
         pDialog.show();
@@ -208,9 +208,9 @@ public final class CommonUtils {
     public static SweetAlertDialog showErrorDialog(Context context,String message){
         SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#ff0000"));
-        pDialog.setTitleText("خطأ");
-        pDialog.setConfirmButton("تم",null);
-        pDialog.setTitleText("تم");
+        pDialog.setTitleText("ERROR");
+        pDialog.setConfirmButton("DONE",null);
+//        pDialog.setTitleText("تم");
         pDialog.setContentText(message);
         pDialog.setCancelable(false);
         pDialog.show();

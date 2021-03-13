@@ -95,7 +95,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/ivInsta"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="24dp"
@@ -114,7 +114,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/ivInsta" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

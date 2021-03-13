@@ -67,25 +67,26 @@
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="36,43€"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivAddToCart" />
+                app:layout_constraintTop_toTopOf="@+id/ivAddToCart" />
 
             <TextView
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="RAINPHARMA"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
                 android:id="@+id/tvSubCategory"
@@ -99,22 +100,25 @@
 
             <TextView
                 android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="Vegalicious Peanut 450g"
                 android:textColor="#2f2f2f"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvSubCategory"
                 app:layout_constraintTop_toBottomOf="@+id/tvSubCategory" />
 
             <TextView
                 android:id="@+id/tvLongDes"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="TextView"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvDescription"
                 app:layout_constraintStart_toStartOf="@+id/tvDescription"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>

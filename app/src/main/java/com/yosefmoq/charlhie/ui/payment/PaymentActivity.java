@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -20,7 +19,6 @@ import com.yosefmoq.charlhie.Base.BaseActivity;
 import com.yosefmoq.charlhie.CardNavigation;
 import com.yosefmoq.charlhie.MainActivity;
 import com.yosefmoq.charlhie.R;
-import com.yosefmoq.charlhie.SendOrderTask;
 import com.yosefmoq.charlhie.databinding.ActivityPaymentBinding;
 import com.yosefmoq.charlhie.models.BanContactRequest;
 import com.yosefmoq.charlhie.models.Category;
@@ -42,17 +40,17 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     Stripe stripeObject;
     private Source stripeSource;
 
-    @Override // com.yosefmoq.charlhie.Base.BaseActivity
+    @Override
     public int getLayoutId() {
         return R.layout.activity_payment;
     }
 
-    @Override // com.yosefmoq.charlhie.Base.BaseActivity
+    @Override
     public int getBindingVariable() {
         return BR._all;
     }
 
-    @Override // com.yosefmoq.charlhie.Base.BaseActivity
+    @Override
     public void initItems() {
         this.rigesterRequest = LocalSave.getInstance(getApplicationContext()).getCurrentUser();
         this.productResponses = getViewModel().getProduct();
@@ -65,12 +63,8 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     @Override
     public void initClicks() {
         getViewModel().baseResponseMutableLiveData.observe(this,s -> {
-            if(s.equalsIgnoreCase("done")){
-                getViewModel().deleteCart();
-                finish();
-            }else {
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-            }
+            getViewModel().deleteCart();
+            intent();
         });
         ((ActivityPaymentBinding) getViewDataBinding()).rlPayBancontact.setOnClickListener(new View.OnClickListener() {
 
@@ -96,7 +90,7 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
         findViewById(R.id.paymentProgress).setVisibility(View.VISIBLE);
         try {
             this.stripeObject = new Stripe(getApplicationContext(), Constant.STRIPE_PUBLIC_KEY);
-            this.stripeObject.createSource(SourceParams.createBancontactParams(Math.round(/*getViewModel().totalAmountToPay()*/1 * 100.0d), "Charlhie", "my://charlhie/?status=1", "ORDER AT11"), new SourceCallback() {
+            this.stripeObject.createSource(SourceParams.createBancontactParams(Math.round(getViewModel().totalAmountToPay()* 100.0d), "Charlhie", "my://charlhie/?status=1", "ORDER AT11"), new SourceCallback() {
                 @Override
                 public void onError(Exception error) {
                     findViewById(R.id.paymentProgress).setVisibility(View.GONE);
@@ -127,8 +121,8 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
 
     private void sendOrderEmail(String email) {
         String text = new EmailFormatter(this, getViewModel().totalAmountToPay(), this.rigesterRequest, this.productResponses, getViewModel().myDatabase.getAnnal()).formatText(false);
-//        sendEmailToServer(email, text);
-//        sendEmailToServer("kurtwarson@hotmail.com", text);
+        sendEmailToServer(email, text);
+        sendEmailToServer("kurtwarson@hotmail.com", text);
         sendEmailToServer("yosefmoqq@gmail.com",text);
     }
 
@@ -170,12 +164,16 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     public void SuccessBan() {
         sendOrderEmail(this.rigesterRequest.getEmail());
 //        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
+
     }
 
     @Override
     public void ErrorBan(String msg) {
+        showError(msg);
+/*
         sendOrderEmail(this.rigesterRequest.getEmail());
         new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
+*/
     }
 
     @Override
@@ -195,7 +193,7 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
                 if (pollingResponse.isSuccess() && stripeSource.getStatus().equals(Source.CHARGEABLE)) {
                     Log.v("ttt", stripeSource.getId());
                     BanContactRequest banContactRequest = new BanContactRequest();
-                    banContactRequest.setAmount((int) Math.round(getViewModel().totalAmountToPay() * 100.0d));
+                    banContactRequest.setAmount((int) Math.round(getViewModel().totalAmountToPay()* 100.0d));
                     banContactRequest.setSource(pollingResponse.getSource().getId());
                     Log.v("ttt", banContactRequest.toString());
                     getViewModel().banRequest(banContactRequest);

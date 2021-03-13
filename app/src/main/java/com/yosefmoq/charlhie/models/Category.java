@@ -50,6 +50,16 @@ public class Category implements Parcelable {
     @Expose
     private String subCategory;
 
+    private boolean isFav;
+
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
+    }
+
     public Category() {
     }
 

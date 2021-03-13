@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yosefmoq.charlhie.ui.ItemsActivity;
 
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.MyViewHolder> {
+
     Context context;
     ArraySet<String> strings;
 
@@ -31,6 +32,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         String s = this.strings.valueAt(position);
         holder.tvSubCategory.setText(s);
         holder.clParent.setOnClickListener(v -> {
+//            ((DrawerActivity)context).drawer.closeDrawers();
             this.context.startActivity(new Intent(this.context, ItemsActivity.class).putExtra("cat", s));
 
         });

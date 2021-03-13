@@ -1,4 +1,4 @@
-package com.yosefmoq.charlhie.ui.payment;
+  package com.yosefmoq.charlhie.ui.payment;
 
 import android.app.Application;
 import android.util.Log;
@@ -26,12 +26,12 @@ public class PaymentMV extends BaseViewModel<CardNavigation> {
     public MutableLiveData<String> baseResponseMutableLiveData = new MutableLiveData<>();
     public void banRequest(BanContactRequest banContactRequest) {
         getCompositeDisposable().add(getDataManager().banContact(banContactRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(banResponse -> {
-            if (banResponse.getStatus().equalsIgnoreCase("Your betaling has been received, Thank you!")) {
-                ((CardNavigation) getNavigator()).SuccessBan();
+            if (banResponse.equalsIgnoreCase("Your betaling has been received, Thank you!")) {
+                getNavigator().SuccessBan();
             } else {
-                ((CardNavigation) getNavigator()).ErrorBan(banResponse.getMsg());
+                getNavigator().ErrorBan(banResponse);
             }
-            Toast.makeText(getApplication(), banResponse.getMsg(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), banResponse, Toast.LENGTH_LONG).show();
 
         }, throwable -> {
             Toast.makeText(getApplication(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -42,9 +42,13 @@ public class PaymentMV extends BaseViewModel<CardNavigation> {
     }
 
     public void sendEmail(String email, String data) {
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager().sendEmail(email, data).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(s -> {
             baseResponseMutableLiveData.postValue("done");
+            setIsLoading(false);
         }, throwable -> {
+            setIsLoading(false);
+
             baseResponseMutableLiveData.postValue("error");
 
             Log.v("ttt", throwable.getLocalizedMessage());
