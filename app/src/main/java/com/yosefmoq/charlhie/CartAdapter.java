@@ -48,6 +48,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.itemCartBinding.tvName.setText(productResponse.getSubCategory());
         Picasso.get().load(productResponse.getImage()).into(holder.itemCartBinding.ivImage);
         TextView textView = holder.itemCartBinding.tvPrice;
+        holder.itemCartBinding.tvDescription.setText(productResponse.getDescription());
+
         textView.setText(productResponse.getNativePrice() + " €");
         TextView textView2 = holder.itemCartBinding.tvQuantity;
         textView2.setText("Aantal " + productResponse.getQuantity());

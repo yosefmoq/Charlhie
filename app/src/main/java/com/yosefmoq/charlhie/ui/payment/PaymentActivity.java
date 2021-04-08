@@ -54,7 +54,6 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     public void initItems() {
         this.rigesterRequest = LocalSave.getInstance(getApplicationContext()).getCurrentUser();
         this.productResponses = getViewModel().getProduct();
-//        sendOrderEmail("yosefmoqq@gmail.com");
 //        new SendOrderTask(this, getViewModel().myDatabase.getProducts(), "").execute(new String[0]);
 
         getViewModel().setNavigator(this);
@@ -120,10 +119,11 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
     }
 
     private void sendOrderEmail(String email) {
-        String text = new EmailFormatter(this, getViewModel().totalAmountToPay(), this.rigesterRequest, this.productResponses, getViewModel().myDatabase.getAnnal()).formatText(false);
+        String text = new EmailFormatter(this, getViewModel().totalAmountToPay()<50?getViewModel().totalAmountToPay()+10:getViewModel().totalAmountToPay(), this.rigesterRequest, this.productResponses, getViewModel().myDatabase.getAnnal()).formatText(false);
         sendEmailToServer(email, text);
         sendEmailToServer("kurtwarson@hotmail.com", text);
         sendEmailToServer("yosefmoqq@gmail.com",text);
+//        sendEmailToServer("pvh@charlhie.be",text);
     }
 
     private void sendEmailToServer(String email, String text) {

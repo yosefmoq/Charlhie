@@ -49,6 +49,7 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
         cartAdapter2.onDialogConfirm(this);
         ((FragmentGalleryBinding) getViewDataBinding()).rvItems.setLayoutManager(new LinearLayoutManager(requireContext()));
         ((FragmentGalleryBinding) getViewDataBinding()).rvItems.setAdapter(this.cartAdapter);
+        getViewModel().getCategories();
     }
 
     @Override // com.yosefmoq.charlhie.Base.BaseFragment
@@ -86,7 +87,7 @@ public class GalleryFragment extends BaseFragment<FragmentGalleryBinding, HomeVi
 
             return;
         }
-        getViewDataBinding().rvItems.setVisibility(View.GONE);
+//        getViewDataBinding().rvItems.setVisibility(View.GONE);
         getViewDataBinding().ivNotFound.setVisibility(View.VISIBLE);
         getViewDataBinding().llFound.setVisibility(View.GONE);
     }

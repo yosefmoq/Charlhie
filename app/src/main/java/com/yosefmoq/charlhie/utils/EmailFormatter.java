@@ -75,11 +75,10 @@ public class EmailFormatter {
         stringBuilder.append(" ");
         stringBuilder.append(this.rigesterRequest.getPostcode() + " ");
         stringBuilder.append(this.rigesterRequest.getCity() + "<br>");
-        stringBuilder.append(this.rigesterRequest.getVat() + "<br><br>");
-        stringBuilder.append(this.address()+"<br><br>");
-        stringBuilder.append(" <br> ");
+        stringBuilder.append(this.rigesterRequest.getVat() + "<br><br><br>");
+//        stringBuilder.append(this.address()+"<br><br>");
         stringBuilder.append(" Charlhie");
-        stringBuilder.append(" <br> ");
+        stringBuilder.append(" <br> <br>");
         stringBuilder.append(" Tel +32 486678082");
         stringBuilder.append(" <br> ");
         return stringBuilder.toString();
@@ -92,7 +91,7 @@ public class EmailFormatter {
             Iterator<Category> it = arrayList.iterator();
             while (it.hasNext()) {
                 Category product = it.next();
-                String text2 = ((text + "Categorie : " + product.getCategory() + "<br> Beschrijving : " + product.getDescription() + "<br> Prijs : " + new DecimalFormat("##.##").format(product.getNativePrice() * ((double) product.getQuantity())) + " EUR <br>") + "<br>") + "Aantal :  " + product.getQuantity();
+                String text2 = ((text  + "<br> Beschrijving : " + product.getDescription() + "<br> Prijs : " + new DecimalFormat("##.##").format(product.getNativePrice() * ((double) product.getQuantity())) + " EUR <br>") + "<br>") + "Aantal :  " + product.getQuantity();
                 if (0 == this.products.size() - 1) {
                     text = text2 + "<br>";
                 } else {
