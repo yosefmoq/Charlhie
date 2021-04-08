@@ -122,8 +122,8 @@ public class PaymentActivity extends BaseActivity<ActivityPaymentBinding, Paymen
         String text = new EmailFormatter(this, getViewModel().totalAmountToPay()<50?getViewModel().totalAmountToPay()+10:getViewModel().totalAmountToPay(), this.rigesterRequest, this.productResponses, getViewModel().myDatabase.getAnnal()).formatText(false);
         sendEmailToServer(email, text);
         sendEmailToServer("kurtwarson@hotmail.com", text);
-        sendEmailToServer("yosefmoqq@gmail.com",text);
-//        sendEmailToServer("pvh@charlhie.be",text);
+        sendEmailToServer("yos.ail@outlook.com",text);
+        sendEmailToServer("pvh@charlhie.be",text);
     }
 
     private void sendEmailToServer(String email, String text) {
